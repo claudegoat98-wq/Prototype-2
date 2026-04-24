@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NovaPulse Digital Business Card — Scan our QR code to connect instantly.">
+  <title>Business Card | NovaPulse Digital</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+  <style>
+    .bcard-hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-16) var(--space-6);
+      background: var(--gradient-hero);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Business Card */
+    .business-card-container {
+      perspective: 1200px;
+      cursor: pointer;
+    }
+
+    .business-card {
+      width: 480px;
+      max-width: 90vw;
+      border-radius: var(--radius-2xl);
+      position: relative;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .business-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      border-radius: var(--radius-2xl);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .card-front {
+      background: linear-gradient(145deg, #12122a 0%, #1a1a3e 50%, #0d0d1a 100%);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      padding: var(--space-10);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(124, 58, 237, 0.1);
+      z-index: 2;
+    }
+
+    .card-back {
+      background: linear-gradient(145deg, #1a1a3e 0%, #12122a 50%, #0d0d1a 100%);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      padding: var(--space-8);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.1);
+    }
+
+    /* Card Front Content */
+    .card-front .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .card-front .brand-section {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .card-front .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-lg);
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: 900;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-front .brand-logo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+      animation: shimmer 3s infinite;
+    }
+
+    .card-front .brand-name {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .card-front .brand-tagline {
+      font-size: var(--text-xs);
+      color: var(--color-primary-light);
+      letter-spacing: 0.05em;
+    }
+
+    .card-front .nfc-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--color-text-muted);
+    }
+
+    .card-front .card-middle {
+      margin: var(--space-8) 0;
+    }
+
+    .card-front .person-name {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: var(--space-1);
+    }
+
+    .card-front .person-title {
+      font-size: var(--text-sm);
+      color: var(--color-secondary);
+      font-weight: 500;
+    }
+
+    .card-front .card-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+    }
+
+    .card-front .contact-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .card-front .contact-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-sm);
+      background: rgba(124, 58, 237, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    /* Decorative elements */
+    .card-front .card-pattern {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    .card-front .card-pattern circle {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 0.5;
+    }
+
+    .card-front .glow-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+    }
+
+    /* Card Back Content */
+    .card-back .qr-container {
+      width: 180px;
+      height: 180px;
+      padding: var(--space-4);
+      background: #fff;
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-back .qr-container img,
+    .card-back .qr-container canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-back .scan-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    .card-back .scan-url {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-secondary);
+      padding: var(--space-2) var(--space-4);
+      background: rgba(6, 182, 212, 0.1);
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+    }
+
+    .card-back .social-links {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+    }
+
+    .card-back .social-links a {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      transition: all var(--transition-fast);
+    }
+
+    .card-back .social-links a:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    /* Flip instruction */
+    .flip-hint {
+      text-align: center;
+      margin-top: var(--space-8);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      animation: floatY 3s ease-in-out infinite;
+    }
+
+    /* Contact Info Section */
+    .contact-section {
+      background: var(--color-bg-secondary);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .contact-card {
+      text-align: center;
+      padding: var(--space-8);
+      background: var(--color-bg-surface);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-xl);
+      transition: all var(--transition-base);
+    }
+
+    .contact-card:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .contact-card .contact-card-icon {
+      font-size: 2rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .contact-card h4 {
+      margin-bottom: var(--space-2);
+    }
+
+    .contact-card p {
+      font-size: var(--text-sm);
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .business-card { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">NOVAPULSE</div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <div class="logo-icon">N</div>
+        <span>NovaPulse</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="store.html">Store</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="business-card.html" class="active">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="nav-cart" data-open-cart>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="m1 1 4 0 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61l1.6-8.39h-17"/></svg>
+          <span class="cart-count" style="display:none;">0</span>
+        </div>
+        <div class="nav-toggle" id="nav-toggle">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Business Card Section -->
+  <section class="bcard-hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div>
+      <div class="business-card-container reveal-scale" onclick="document.getElementById('bcard').classList.toggle('flipped')">
+        <div class="business-card" id="bcard" style="height: 300px;">
+
+          <!-- Front -->
+          <div class="card-face card-front">
+            <!-- Decorative pattern -->
+            <svg class="card-pattern" viewBox="0 0 200 200">
+              <circle cx="180" cy="20" r="40"/>
+              <circle cx="180" cy="20" r="60"/>
+              <circle cx="180" cy="20" r="80"/>
+              <circle cx="180" cy="20" r="100"/>
+            </svg>
+
+            <div class="card-top">
+              <div class="brand-section">
+                <div class="brand-logo">N</div>
+                <div>
+                  <div class="brand-name">NovaPulse</div>
+                  <div class="brand-tagline">Digital Studio</div>
+                </div>
+              </div>
+              <div class="nfc-icon">📡</div>
+            </div>
+
+            <div class="card-middle">
+              <div class="person-name">NovaPulse Digital</div>
+              <div class="person-title">Creative Digital Studio • Bangalore</div>
+            </div>
+
+            <div class="card-bottom">
+              <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <span>ecommercenoobs@gmail.com</span>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <span>+91 8861005767</span>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">💳</div>
+                <span>UPI: 8861005767@nyes</span>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <span>Bangalore, Karnataka, India</span>
+              </div>
+            </div>
+
+            <div class="glow-line"></div>
+          </div>
+
+          <!-- Back -->
+          <div class="card-face card-back">
+            <div class="qr-container" id="qr-code">
+              <!-- QR code generated by JS -->
+            </div>
+
+            <p class="scan-text">Scan to visit our website</p>
+            <span class="scan-url">NovaPulse Digital</span>
+
+            <div class="social-links">
+              <a href="#" title="Twitter">𝕏</a>
+              <a href="#" title="GitHub">⌨</a>
+              <a href="#" title="Discord">💬</a>
+              <a href="#" title="LinkedIn">in</a>
+              <a href="#" title="YouTube">▶</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-hint">
+        👆 Click the card to flip &amp; scan the QR code
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Info -->
+  <section class="section contact-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="label reveal">Get In Touch</span>
+        <h2 class="reveal delay-1">Let's Create Together</h2>
+        <p class="reveal delay-2">Reach out to us through any of these channels.</p>
+      </div>
+
+      <div class="contact-grid stagger-list">
+        <div class="contact-card">
+          <div class="contact-card-icon">📧</div>
+          <h4>Email Us</h4>
+          <p>ecommercenoobs@gmail.com</p>
+          <p style="color:var(--color-text-muted);">We reply within 24 hours</p>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">💬</div>
+          <h4>Live Chat</h4>
+          <p>Talk to our AI Assistant</p>
+          <button class="btn btn-primary btn-sm ripple-effect" style="margin-top: var(--space-3);" onclick="if(window.chatbot) chatbot.toggle();">Open Chat</button>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">📝</div>
+          <h4>Feedback Form</h4>
+          <p>Share your experience</p>
+          <a href="index.html#feedback" class="btn btn-secondary btn-sm" style="margin-top: var(--space-3);">Give Feedback</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map / Address Section -->
+  <section class="section">
+    <div class="container container-narrow" style="text-align: center;">
+      <div class="card reveal" style="padding: var(--space-10);">
+        <div style="font-size: 3rem; margin-bottom: var(--space-4);">📍</div>
+        <h3 style="margin-bottom: var(--space-3);">Our Studio</h3>
+        <p style="font-size: var(--text-lg); color: var(--color-text-secondary);">
+          Bangalore, Karnataka<br>
+          India 🇮🇳<br>
+          📱 +91 8861005767
+        </p>
+        <p style="margin-top: var(--space-3); font-size: var(--text-sm); color: var(--color-secondary);">
+          💳 Pay via UPI: <strong>8861005767@nyes</strong>
+        </p>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-primary-light);">
+          Open Monday — Friday, 9:00 AM — 6:00 PM IST
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="padding-top: var(--space-6); border-top: none;">
+        <span>© 2026 NovaPulse Digital. All rights reserved.</span>
+        <div class="footer-social">
+          <a href="#">𝕏</a>
+          <a href="#">⌨</a>
+          <a href="#">💬</a>
+          <a href="#">▶</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Gamification Rewards Bar -->
+  <div class="rewards-bar" id="rewards-bar">
+    <div class="points">
+      <span>🏆</span>
+      <span class="points-value">0</span> pts
+    </div>
+    <div style="display:flex;align-items:center;gap:var(--space-2);">
+      <span style="font-size:var(--text-xs);color:var(--color-primary-light);" class="level-name">Newcomer</span>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+    <span class="next-reward">100 pts to next level</span>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/chatbot.js"></script>
+
+  <script>
+    // Generate QR Code
+    document.addEventListener('DOMContentLoaded', () => {
+      const qrContainer = document.getElementById('qr-code');
+      if (qrContainer && typeof qrcode !== 'undefined') {
+        try {
+          const qr = qrcode(0, 'M');
+          // Point to the index page — in production this would be the actual URL
+          const currentUrl = window.location.href.replace('business-card.html', 'index.html');
+          qr.addData(currentUrl);
+          qr.make();
+
+          // Create QR as image
+          const img = document.createElement('img');
+          img.src = qr.createDataURL(6, 0);
+          img.alt = 'QR Code to NovaPulse Digital website';
+          img.style.width = '100%';
+          img.style.height = '100%';
+          img.style.imageRendering = 'pixelated';
+          qrContainer.appendChild(img);
+        } catch (e) {
+          // Fallback: show text
+          qrContainer.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#000;font-size:12px;font-weight:600;text-align:center;">QR Code<br><small style="color:#666;">Visit novapulse.digital</small></div>';
+        }
+      }
+
+      // Award points for visiting business card page
+      if (window.GamificationSystem && !sessionStorage.getItem('bcard_visit')) {
+        GamificationSystem.addPoints(10, 'Visited business card!');
+        sessionStorage.setItem('bcard_visit', 'true');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NovaPulse Digital Studio — Premium digital products for creators. eBooks, music, photography, and video content. Ignite Your Digital Universe.">
+  <title>NovaPulse Digital | Ignite Your Digital Universe</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+
+  <style>
+    /* Page-specific styles */
+    .promo-video-section {
+      background: var(--color-bg-secondary);
+    }
+
+    .cta-section {
+      text-align: center;
+      background: var(--gradient-hero);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-bg-primary);
+      opacity: 0.85;
+    }
+
+    .cta-section .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .clients-marquee {
+      padding: var(--space-12) 0;
+      background: var(--color-bg-secondary);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .clients-marquee .marquee-item {
+      padding: 0 var(--space-12);
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: rgba(255,255,255,0.08);
+      white-space: nowrap;
+    }
+
+    .feedback-section {
+      background: var(--color-bg-secondary);
+    }
+
+    .subscription-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .subscription-cards {
+        grid-template-columns: 1fr;
+      }
+      .pricing-card.featured {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">NOVAPULSE</div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <div class="logo-icon">N</div>
+        <span>NovaPulse</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="store.html">Store</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="business-card.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="nav-cart" data-open-cart>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="m1 1 4 0 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61l1.6-8.39h-17"/></svg>
+          <span class="cart-count" style="display:none;">0</span>
+        </div>
+        <div class="nav-toggle" id="nav-toggle">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <canvas class="hero-canvas" id="particles-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-label reveal">
+          <span class="pulse-dot"></span>
+          Now with AI-Powered Assistant
+        </div>
+
+        <h1 class="reveal delay-1">
+          Ignite Your<br>
+          <span class="text-gradient" data-scramble>Digital Universe</span>
+        </h1>
+
+        <p class="reveal delay-2">
+          Premium digital products crafted for creators, marketers, and visionaries. 
+          From eBooks to music, photography to video — everything you need to build your empire.
+        </p>
+
+        <div class="hero-cta reveal delay-3">
+          <a href="store.html" class="btn btn-primary btn-lg ripple-effect">
+            Explore Products <span>→</span>
+          </a>
+          <a href="#promo-video" class="btn btn-secondary btn-lg">
+            <span>▶</span> Watch Demo
+          </a>
+        </div>
+
+        <div class="hero-stats reveal delay-4">
+          <div class="hero-stat">
+            <div class="stat-number"><span data-count="8500" data-suffix="+">0</span></div>
+            <div class="stat-label">Happy Creators</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-number"><span data-count="200" data-suffix="+">0</span></div>
+            <div class="stat-label">Digital Products</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-number"><span data-count="4.9">0</span></div>
+            <div class="stat-label">Average Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients Marquee -->
+  <div class="clients-marquee">
+    <div class="marquee">
+      <div class="marquee-inner">
+        <span class="marquee-item">DRIBBBLE</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">BEHANCE</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">SPOTIFY</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">ADOBE</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">FIGMA</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">CANVA</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">NOTION</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">DRIBBBLE</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">BEHANCE</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">SPOTIFY</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">ADOBE</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">FIGMA</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">CANVA</span>
+        <span class="marquee-item">•</span>
+        <span class="marquee-item">NOTION</span>
+        <span class="marquee-item">•</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="label reveal">Why NovaPulse</span>
+        <h2 class="reveal delay-1">Everything Creators Need</h2>
+        <p class="reveal delay-2">Premium tools, content, and resources designed to accelerate your creative journey.</p>
+      </div>
+
+      <div class="grid grid-3 stagger-list">
+        <div class="feature-card tilt-card">
+          <div class="feature-icon" style="background: rgba(124, 58, 237, 0.1); color: #a78bfa;">📖</div>
+          <h3>eBooks & Guides</h3>
+          <p>Expert-written guides covering digital marketing, content creation, brand building, and more.</p>
+        </div>
+
+        <div class="feature-card tilt-card">
+          <div class="feature-icon" style="background: rgba(236, 72, 153, 0.1); color: #f9a8d4;">🎵</div>
+          <h3>Music & Audio</h3>
+          <p>Royalty-free beats, ambient soundscapes, and audio production kits for any project.</p>
+        </div>
+
+        <div class="feature-card tilt-card">
+          <div class="feature-icon" style="background: rgba(6, 182, 212, 0.1); color: #67e8f9;">📸</div>
+          <h3>Photography</h3>
+          <p>Curated photo collections from urban landscapes to nature, all commercially licensed.</p>
+        </div>
+
+        <div class="feature-card tilt-card">
+          <div class="feature-icon" style="background: rgba(245, 158, 11, 0.1); color: #fbbf24;">🎬</div>
+          <h3>Video & Motion</h3>
+          <p>Motion graphics templates, LUTs, and cinematic presets for professional video production.</p>
+        </div>
+
+        <div class="feature-card tilt-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #6ee7b7;">🤖</div>
+          <h3>AI Assistant</h3>
+          <p>Our intelligent chatbot helps you find the perfect products and answers all your questions instantly.</p>
+        </div>
+
+        <div class="feature-card tilt-card">
+          <div class="feature-icon" style="background: rgba(239, 68, 68, 0.1); color: #fca5a5;">⭐</div>
+          <h3>Rewards Program</h3>
+          <p>Earn points with every interaction and purchase. Redeem for discounts and exclusive content.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="section" id="products" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <span class="label reveal">Shop</span>
+        <h2 class="reveal delay-1">Featured Products</h2>
+        <p class="reveal delay-2">Handpicked favorites from our digital collection.</p>
+      </div>
+
+      <div class="grid grid-4" id="featured-products">
+        <!-- Populated by store.js -->
+      </div>
+
+      <div style="text-align: center; margin-top: var(--space-12);" class="reveal">
+        <a href="store.html" class="btn btn-secondary btn-lg">View All Products →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promo Video Section -->
+  <section class="section promo-video-section" id="promo-video">
+    <div class="container">
+      <div class="section-header">
+        <span class="label reveal">See It In Action</span>
+        <h2 class="reveal delay-1">The NovaPulse Experience</h2>
+        <p class="reveal delay-2">Watch how our platform empowers creators worldwide.</p>
+      </div>
+
+      <div class="video-wrapper reveal-scale" style="max-width: 900px; margin: 0 auto;">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg, rgba(124,58,237,0.2), rgba(6,182,212,0.1));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:var(--space-4);">
+          <div style="font-size:4rem;">🚀</div>
+          <h3 style="font-size:var(--text-2xl);">NovaPulse Digital Studio</h3>
+          <p style="color:var(--color-text-muted);max-width:400px;text-align:center;">Premium digital products for the modern creator. Built with passion, designed for impact.</p>
+          <div style="display:flex;gap:var(--space-3);margin-top:var(--space-4);">
+            <span class="badge badge-primary">✨ eBooks</span>
+            <span class="badge badge-accent">🎵 Music</span>
+            <span class="badge badge-secondary">📸 Photos</span>
+            <span class="badge badge-success">🎬 Video</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscription Plans -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="label reveal">Pricing</span>
+        <h2 class="reveal delay-1">Choose Your Plan</h2>
+        <p class="reveal delay-2">Unlock premium content with our flexible subscription model.</p>
+      </div>
+
+      <div class="subscription-cards">
+        <div class="pricing-card reveal">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">Free</div>
+          <div class="plan-desc">Perfect for exploring our platform</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> Access to free blog content</li>
+            <li><span class="check">✓</span> Community forums</li>
+            <li><span class="check">✓</span> AI chatbot (5 queries/day)</li>
+            <li><span class="check">✓</span> Earn loyalty points</li>
+          </ul>
+          <button class="btn btn-secondary" style="width: 100%;" onclick="showToast('Welcome to Starter!', 'success')">Get Started</button>
+        </div>
+
+        <div class="pricing-card featured reveal delay-1">
+          <div class="plan-name">Creator</div>
+          <div class="plan-price">₹299<span>/mo</span></div>
+          <div class="plan-desc">For serious content creators</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> Everything in Starter</li>
+            <li><span class="check">✓</span> 2 free downloads/month</li>
+            <li><span class="check">✓</span> Priority customer support</li>
+            <li><span class="check">✓</span> Exclusive creator tools</li>
+            <li><span class="check">✓</span> 2x loyalty points</li>
+          </ul>
+          <button class="btn btn-primary ripple-effect" style="width: 100%;" onclick="showToast('Creator plan activated! 🎉', 'success')">Subscribe Now</button>
+        </div>
+
+        <div class="pricing-card reveal delay-2">
+          <div class="plan-name">Pro Studio</div>
+          <div class="plan-price">₹799<span>/mo</span></div>
+          <div class="plan-desc">For teams and agencies</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> Everything in Creator</li>
+            <li><span class="check">✓</span> Unlimited downloads</li>
+            <li><span class="check">✓</span> Early access to new products</li>
+            <li><span class="check">✓</span> Commercial license included</li>
+            <li><span class="check">✓</span> 5x loyalty points</li>
+            <li><span class="check">✓</span> Admin analytics dashboard</li>
+          </ul>
+          <button class="btn btn-secondary" style="width: 100%;" onclick="showToast('Pro Studio activated! 🚀', 'success')">Go Pro</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <span class="label reveal">Testimonials</span>
+        <h2 class="reveal delay-1">Loved by Creators</h2>
+        <p class="reveal delay-2">See what our community has to say.</p>
+      </div>
+
+      <div class="grid grid-3 stagger-list">
+        <div class="testimonial-card">
+          <div class="quote-icon">"</div>
+          <p class="testimonial-text">NovaPulse completely transformed my content workflow! The Cosmic Beats pack is on repeat in my studio, and the AI chatbot recommended exactly the right products for my YouTube channel.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">RS</div>
+            <div>
+              <div class="author-name">Rahul Sharma</div>
+              <div class="author-role">YouTuber, Bangalore</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote-icon">"</div>
+          <p class="testimonial-text">The Marketing Mastery Guide alone was worth 10x the price. My agency's client acquisition rate doubled within 3 months of implementing their strategies. UPI payment made it so easy!</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">PP</div>
+            <div>
+              <div class="author-name">Priya Patel</div>
+              <div class="author-role">Digital Agency Owner, Mumbai</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote-icon">"</div>
+          <p class="testimonial-text">As a filmmaker from Hyderabad, the Motion Graphics Kit and Cinematic LUTs Pack are essentials in my toolkit. Pro quality at prices that make sense for Indian creators. 🔥</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AR</div>
+            <div>
+              <div class="author-name">Arjun Reddy</div>
+              <div class="author-role">Filmmaker, Hyderabad</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Feedback Section -->
+  <section class="section feedback-section" id="feedback">
+    <div class="container container-narrow">
+      <div class="section-header">
+        <span class="label reveal">Feedback</span>
+        <h2 class="reveal delay-1">Share Your Experience</h2>
+        <p class="reveal delay-2">Help us improve by sharing your thoughts. All responses go directly to our inbox.</p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="reveal" style="display:flex;justify-content:center;gap:var(--space-3);margin-bottom:var(--space-6);">
+        <button class="btn btn-primary btn-sm" id="tab-native" onclick="switchFeedbackTab('native')" style="min-width:140px;">✍️ Quick Form</button>
+        <button class="btn btn-secondary btn-sm" id="tab-google" onclick="switchFeedbackTab('google')" style="min-width:140px;">📋 Google Form</button>
+      </div>
+
+      <!-- Tab 1: Native Form (sends to email via FormSubmit.co) -->
+      <div id="feedback-native" class="card reveal" style="padding: var(--space-8); max-width: 640px; margin: 0 auto;">
+        <form action="https://formsubmit.co/ecommercenoobs@gmail.com" method="POST" id="feedback-form" onsubmit="handleFeedback(event)">
+          <input type="hidden" name="_subject" value="New NovaPulse Feedback">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_honey" style="display:none">
+
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" class="input" name="Name" placeholder="Enter your name" required id="feedback-name">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" class="input" name="Email" placeholder="you@example.com" required id="feedback-email">
+          </div>
+          <div class="form-group">
+            <label>How would you rate your experience?</label>
+            <div class="star-rating" id="rating-stars">
+              <span class="star" data-rating="1">★</span>
+              <span class="star" data-rating="2">★</span>
+              <span class="star" data-rating="3">★</span>
+              <span class="star" data-rating="4">★</span>
+              <span class="star" data-rating="5">★</span>
+            </div>
+            <input type="hidden" name="Rating" id="rating-value" value="Not rated">
+          </div>
+          <div class="form-group">
+            <label>Your Feedback</label>
+            <textarea class="input" name="Message" placeholder="Tell us what you think..." rows="4" required id="feedback-message"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg ripple-effect" style="width: 100%;">
+            Submit Feedback ✨
+          </button>
+        </form>
+        <p style="text-align:center;margin-top:var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted);">
+          ✅ Responses go directly to ecommercenoobs@gmail.com
+        </p>
+      </div>
+
+      <!-- Tab 2: Embedded Google Form -->
+      <div id="feedback-google" class="card reveal" style="padding: var(--space-6); max-width: 700px; margin: 0 auto; display: none;">
+        <div style="text-align:center;margin-bottom:var(--space-4);">
+          <span class="badge badge-primary" style="margin-bottom:var(--space-3);">Google Form</span>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Fill out the form below — powered by Google Forms.</p>
+        </div>
+        <div style="position:relative;overflow:hidden;border-radius:var(--radius-lg);background:rgba(255,255,255,0.02);min-height:500px;">
+          <iframe
+            id="google-form-iframe"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSfulwxX71Z9Hz5ZtuwdNZ0SS53FRBRdZXnY_Tz_aiydTeN84Q/viewform?embedded=true"
+            width="100%"
+            height="700"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            style="border:none;border-radius:var(--radius-lg);"
+          >Loading Google Form...</iframe>
+        </div>
+        <div style="text-align:center;margin-top:var(--space-4);">
+          <p style="font-size:var(--text-xs);color:var(--color-text-muted);">
+            Having trouble viewing? <a href="https://docs.google.com/forms/d/e/1FAIpQLSfulwxX71Z9Hz5ZtuwdNZ0SS53FRBRdZXnY_Tz_aiydTeN84Q/viewform" target="_blank" style="color:var(--color-secondary);">Open form in new tab →</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta-section">
+    <div class="container" style="text-align:center;">
+      <h2 class="reveal" style="margin-bottom: var(--space-4);">Ready to <span class="text-gradient">Level Up</span>?</h2>
+      <p class="reveal delay-1" style="max-width: 500px; margin: 0 auto var(--space-8);">
+        Join 8,500+ creators already using NovaPulse to build their digital empires.
+      </p>
+      <div class="reveal delay-2" style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+        <a href="store.html" class="btn btn-glow btn-lg ripple-effect">Start Shopping →</a>
+        <a href="business-card.html" class="btn btn-secondary btn-lg">Get Our Card 📇</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-brand">
+            <div class="logo-icon">N</div>
+            <span>NovaPulse</span>
+          </div>
+          <p>Premium digital products for creators, marketers, and visionaries. Based in Bangalore, Karnataka, India.</p>
+          <p style="font-size:var(--text-xs);margin-top:var(--space-2);">
+            📧 ecommercenoobs@gmail.com<br>
+            📱 +91 8861005767<br>
+            💳 UPI: 8861005767@nyes
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="store.html">eBooks</a></li>
+            <li><a href="store.html">Music</a></li>
+            <li><a href="store.html">Photography</a></li>
+            <li><a href="store.html">Video</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+            <li><a href="business-card.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Licenses</a></li>
+            <li><a href="#">Refund Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 NovaPulse Digital. All rights reserved.</span>
+        <div class="footer-social">
+          <a href="#" title="Twitter">𝕏</a>
+          <a href="#" title="GitHub">⌨</a>
+          <a href="#" title="Discord">💬</a>
+          <a href="#" title="YouTube">▶</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Gamification Rewards Bar -->
+  <div class="rewards-bar" id="rewards-bar">
+    <div class="points">
+      <span>🏆</span>
+      <span class="points-value">0</span> pts
+    </div>
+    <div style="display:flex;align-items:center;gap:var(--space-2);">
+      <span style="font-size:var(--text-xs);color:var(--color-primary-light);" class="level-name">Newcomer</span>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+    <span class="next-reward" style="font-size:var(--text-xs);color:var(--color-text-muted);">100 pts to next level</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/chatbot.js"></script>
+
+  <script>
+    // Star rating interaction
+    let selectedRating = 0;
+    document.querySelectorAll('#rating-stars .star').forEach(star => {
+      star.addEventListener('click', () => {
+        selectedRating = parseInt(star.dataset.rating);
+        document.querySelectorAll('#rating-stars .star').forEach((s, i) => {
+          s.classList.toggle('filled', i < selectedRating);
+        });
+        // Sync hidden field
+        const ratingInput = document.getElementById('rating-value');
+        if (ratingInput) ratingInput.value = selectedRating + ' / 5 stars';
+      });
+      star.addEventListener('mouseenter', () => {
+        const rating = parseInt(star.dataset.rating);
+        document.querySelectorAll('#rating-stars .star').forEach((s, i) => {
+          s.classList.toggle('filled', i < rating);
+        });
+      });
+    });
+    document.getElementById('rating-stars')?.addEventListener('mouseleave', () => {
+      document.querySelectorAll('#rating-stars .star').forEach((s, i) => {
+        s.classList.toggle('filled', i < selectedRating);
+      });
+    });
+
+    // Feedback form handler — submits via FormSubmit.co AND shows toast
+    function handleFeedback(e) {
+      e.preventDefault();
+      const form = e.target;
+      const name = document.getElementById('feedback-name').value;
+      const formData = new FormData(form);
+
+      // Submit to FormSubmit.co in the background
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(res => {
+        if (res.ok) {
+          console.log('Feedback sent to email successfully');
+        }
+      }).catch(err => console.log('FormSubmit fallback:', err));
+
+      // Show instant toast
+      showToast(`Thank you ${name}! Your feedback has been submitted. ⭐`, 'success');
+      if (window.GamificationSystem) {
+        GamificationSystem.addPoints(25, 'Submitted feedback!');
+      }
+      form.reset();
+      selectedRating = 0;
+      const ratingInput = document.getElementById('rating-value');
+      if (ratingInput) ratingInput.value = 'Not rated';
+    }
+
+    // Tab switcher for feedback forms
+    function switchFeedbackTab(tab) {
+      const nativeTab = document.getElementById('feedback-native');
+      const googleTab = document.getElementById('feedback-google');
+      const btnNative = document.getElementById('tab-native');
+      const btnGoogle = document.getElementById('tab-google');
+
+      if (tab === 'native') {
+        nativeTab.style.display = 'block';
+        googleTab.style.display = 'none';
+        btnNative.classList.replace('btn-secondary', 'btn-primary');
+        btnGoogle.classList.replace('btn-primary', 'btn-secondary');
+      } else {
+        nativeTab.style.display = 'none';
+        googleTab.style.display = 'block';
+        btnGoogle.classList.replace('btn-secondary', 'btn-primary');
+        btnNative.classList.replace('btn-primary', 'btn-secondary');
+      }
+    }
+  </script>
+</body>
+</html>

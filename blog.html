@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NovaPulse Blog — Real insights on digital creation, marketing in India, and building your creative empire from Bangalore.">
+  <title>Blog | NovaPulse Digital</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+
+  <style>
+    .blog-hero {
+      padding-top: calc(var(--nav-height) + var(--space-16));
+      padding-bottom: var(--space-12);
+      background: var(--gradient-hero);
+      text-align: center;
+    }
+    .blog-hero h1 { font-size: var(--text-5xl); margin-bottom: var(--space-4); }
+
+    .featured-article {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-8);
+      align-items: center;
+      padding: var(--space-8);
+      background: var(--color-bg-surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius-2xl);
+      margin-bottom: var(--space-12);
+      transition: all var(--transition-base);
+    }
+    .featured-article:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+      box-shadow: var(--shadow-xl);
+    }
+    .featured-article .featured-image {
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .featured-article .featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .article-full {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .article-full .article-body { font-size: var(--text-lg); line-height: 1.9; color: var(--color-text-secondary); }
+    .article-full .article-body h2 { margin-top: var(--space-10); margin-bottom: var(--space-4); font-size: var(--text-2xl); }
+    .article-full .article-body h3 { margin-top: var(--space-8); margin-bottom: var(--space-3); }
+    .article-full .article-body p { margin-bottom: var(--space-5); font-size: var(--text-base); }
+    .article-full .article-body blockquote {
+      border-left: 3px solid var(--color-primary);
+      padding: var(--space-4) var(--space-6);
+      margin: var(--space-6) 0;
+      background: rgba(124, 58, 237, 0.05);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      font-style: italic;
+      color: var(--color-text-primary);
+    }
+    .article-full .article-body ul { margin: var(--space-4) 0 var(--space-6); padding-left: var(--space-6); }
+    .article-full .article-body li { margin-bottom: var(--space-2); color: var(--color-text-secondary); }
+    .article-full .article-body .highlight-box {
+      padding: var(--space-6);
+      background: var(--color-bg-surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius-xl);
+      margin: var(--space-6) 0;
+    }
+
+    .reading-progress {
+      position: fixed; top: 0; left: 0; width: 0%; height: 3px;
+      background: var(--gradient-primary); z-index: calc(var(--z-sticky) + 1);
+      transition: width 0.1s linear;
+    }
+
+    /* Article content nav */
+    .article-nav { display: flex; gap: var(--space-4); margin-bottom: var(--space-8); }
+    .article-nav .article-nav-btn {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-bg-surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius-lg);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-size: var(--text-sm);
+    }
+    .article-nav .article-nav-btn:hover,
+    .article-nav .article-nav-btn.active {
+      border-color: var(--color-primary);
+      color: var(--color-primary-light);
+    }
+
+    @media (max-width: 768px) {
+      .featured-article { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">NOVAPULSE</div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <div class="logo-icon">N</div>
+        <span>NovaPulse</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="store.html">Store</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="business-card.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="nav-cart" data-open-cart>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="m1 1 4 0 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61l1.6-8.39h-17"/></svg>
+          <span class="cart-count" style="display:none;">0</span>
+        </div>
+        <div class="nav-toggle" id="nav-toggle">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Blog Hero -->
+  <section class="blog-hero">
+    <div class="container">
+      <span class="label reveal" style="color: var(--color-secondary);">Our Blog</span>
+      <h1 class="reveal delay-1"><span class="text-gradient">Stories & Insights</span></h1>
+      <p class="reveal delay-2" style="max-width:500px;margin:0 auto;font-size:var(--text-lg);">Real strategies, real stories — from India's fastest-growing digital creator community.</p>
+    </div>
+  </section>
+
+  <!-- Blog Content -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Featured Article -->
+      <div class="featured-article reveal-scale">
+        <div class="featured-image">
+          <img src="assets/ebook-1.png" alt="Digital Creator's Handbook">
+        </div>
+        <div class="featured-content">
+          <span class="badge badge-primary" style="margin-bottom: var(--space-3);">Featured</span>
+          <h2 style="margin-bottom: var(--space-3);">Why Every Indian Creator Needs a Digital Product Strategy in 2026</h2>
+          <p style="color: var(--color-text-muted); margin-bottom: var(--space-4);">
+            India's creator economy is projected to hit ₹25,000 crores by 2027. Here's how independent creators from 
+            Bangalore to Mumbai are building sustainable businesses with digital products — and how you can start today.
+          </p>
+          <div style="display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-4);">
+            <span style="font-size:var(--text-xs);color:var(--color-text-muted);">Apr 20, 2026</span>
+            <span style="font-size:var(--text-xs);color:var(--color-text-muted);">8 min read</span>
+          </div>
+          <a href="#article-1" class="btn btn-primary ripple-effect" onclick="showArticle('article-creator-economy'); return false;">Read Article →</a>
+        </div>
+      </div>
+
+      <!-- Blog Grid -->
+      <div class="grid grid-3 stagger-list">
+
+        <div class="blog-card" onclick="showArticle('article-lofi')">
+          <div class="blog-image">
+            <img src="assets/music-1.png" alt="Cosmic Beats" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <span class="blog-tag">Music Production</span>
+              <span>Apr 18, 2026</span>
+              <span>6 min read</span>
+            </div>
+            <h3 class="blog-title">How We Produced Cosmic Beats Vol. 1: A Lo-Fi Journey</h3>
+            <p class="blog-excerpt">A behind-the-scenes look at the synths, samples, and late-night coding sessions that created our best-selling lo-fi beat pack. From FL Studio to your playlist.</p>
+            <a class="read-more">Read More →</a>
+          </div>
+        </div>
+
+        <div class="blog-card" onclick="showArticle('article-photography')">
+          <div class="blog-image">
+            <img src="assets/photo-1.png" alt="Urban Photography" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <span class="blog-tag">Photography</span>
+              <span>Apr 15, 2026</span>
+              <span>5 min read</span>
+            </div>
+            <h3 class="blog-title">Capturing Bangalore: The Story Behind Urban Aesthetics</h3>
+            <p class="blog-excerpt">From MG Road's neon glow to Cubbon Park's morning mist — how we spent 30 days capturing the soul of Bangalore with just a mirrorless camera and a vision.</p>
+            <a class="read-more">Read More →</a>
+          </div>
+        </div>
+
+        <div class="blog-card" onclick="showArticle('article-marketing')">
+          <div class="blog-image">
+            <img src="assets/ebook-2.png" alt="Marketing Guide" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <span class="blog-tag">Marketing</span>
+              <span>Apr 12, 2026</span>
+              <span>7 min read</span>
+            </div>
+            <h3 class="blog-title">5 Digital Marketing Strategies That Actually Work in India</h3>
+            <p class="blog-excerpt">Forget generic Western playbooks. Here are five battle-tested strategies from our Marketing Mastery Guide, adapted for the Indian market.</p>
+            <a class="read-more">Read More →</a>
+          </div>
+        </div>
+
+        <div class="blog-card" onclick="showArticle('article-video')">
+          <div class="blog-image">
+            <img src="assets/video-1.png" alt="Motion Graphics" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <span class="blog-tag">Video Production</span>
+              <span>Apr 10, 2026</span>
+              <span>5 min read</span>
+            </div>
+            <h3 class="blog-title">Motion Graphics for YouTube: From Zero to Pro</h3>
+            <p class="blog-excerpt">How our Motion Graphics Starter Kit helped 200+ Indian YouTubers level up their intros, transitions, and thumbnails without expensive software.</p>
+            <a class="read-more">Read More →</a>
+          </div>
+        </div>
+
+        <div class="blog-card" onclick="showArticle('article-nature')">
+          <div class="blog-image">
+            <img src="assets/photo-2.png" alt="Nature Photography" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <span class="blog-tag">Photography</span>
+              <span>Apr 8, 2026</span>
+              <span>4 min read</span>
+            </div>
+            <h3 class="blog-title">Nature's Canvas: Photographing India's Western Ghats</h3>
+            <p class="blog-excerpt">52 frames, 14 waterfalls, and one incredible monsoon season. The story behind our best-selling nature photography collection.</p>
+            <a class="read-more">Read More →</a>
+          </div>
+        </div>
+
+        <div class="blog-card" onclick="showArticle('article-upi')">
+          <div class="blog-image" style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(6,182,212,0.1)); display:flex;align-items:center;justify-content:center;font-size:3rem;">💳</div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <span class="blog-tag">Business</span>
+              <span>Apr 5, 2026</span>
+              <span>4 min read</span>
+            </div>
+            <h3 class="blog-title">Why UPI Changed Everything for Indian Digital Sellers</h3>
+            <p class="blog-excerpt">From cash-only to instant digital payments — how UPI made it possible for indie creators to sell ₹299 eBooks without merchant accounts or payment gateways.</p>
+            <a class="read-more">Read More →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full Articles (switchable) -->
+  <section class="section" id="full-article" style="display: none; background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="article-full">
+        <button class="btn btn-secondary btn-sm" onclick="hideArticle()" style="margin-bottom: var(--space-6);">← Back to Blog</button>
+        <div id="article-content"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="padding-top: var(--space-6); border-top: none;">
+        <span>© 2026 NovaPulse Digital. Bangalore, India.</span>
+        <div style="font-size:var(--text-xs);color:var(--color-text-muted);">📧 ecommercenoobs@gmail.com • 📱 +91 8861005767</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Gamification Rewards Bar -->
+  <div class="rewards-bar" id="rewards-bar">
+    <div class="points"><span>🏆</span><span class="points-value">0</span> pts</div>
+    <div style="display:flex;align-items:center;gap:var(--space-2);">
+      <span style="font-size:var(--text-xs);color:var(--color-primary-light);" class="level-name">Newcomer</span>
+      <div class="progress-bar"><div class="progress-fill" style="width: 0%;"></div></div>
+    </div>
+    <span class="next-reward">100 pts to next level</span>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/chatbot.js"></script>
+
+  <script>
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const progressBar = document.getElementById('reading-progress');
+      const article = document.getElementById('full-article');
+      if (!progressBar || article.style.display === 'none') { progressBar.style.width = '0%'; return; }
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrollTop / docHeight * 100) + '%';
+    }, { passive: true });
+
+    // Full blog articles data
+    const blogArticles = {
+      'article-creator-economy': {
+        badge: 'Featured',
+        title: "Why Every Indian Creator Needs a Digital Product Strategy in 2026",
+        meta: 'By NovaPulse Team • April 20, 2026 • 8 min read',
+        body: `
+          <p>India's creator economy is booming. With over 80 million content creators and a market projected to reach ₹25,000 crores by 2027, there has never been a better time to turn your creative skills into a sustainable business. But here's the catch — <strong>most Indian creators are still stuck trading time for money</strong>.</p>
+
+          <h2>📊 The Numbers Don't Lie</h2>
+          <p>According to recent data from the Indian Digital Creators Report 2026, only about 12% of Indian creators earn more than ₹50,000/month. The vast majority — nearly 70% — earn less than ₹10,000 despite creating content full-time. The reason? They're relying solely on brand deals and ad revenue.</p>
+
+          <blockquote>"The real shift happens when you stop being just a creator and start being a business owner. Digital products give you leverage — you create once and earn forever." — NovaPulse Team</blockquote>
+
+          <h2>💡 What Are Digital Products?</h2>
+          <p>Digital products are anything valuable that can be delivered online with zero inventory or shipping costs. At NovaPulse, we focus on four categories that every creator can tap into:</p>
+          <ul>
+            <li><strong>eBooks & Guides</strong> — Package your expertise into downloadable guides. Our Creator's Handbook (₹499) has sold 142+ copies from word-of-mouth alone.</li>
+            <li><strong>Music & Audio</strong> — Lo-fi beats, ambient tracks, podcast intros. Our Cosmic Beats Vol. 1 (₹399) is used by YouTubers across India.</li>
+            <li><strong>Photography Collections</strong> — Curated, commercially-licensed photo packs. Our Bangalore Urban Aesthetics (₹299) launched with 50+ images from around MG Road, Koramangala, and Indiranagar.</li>
+            <li><strong>Video & Motion</strong> — Templates, LUTs, and motion graphics. Our Motion Graphics Kit (₹999) helps creators skip months of After Effects learning.</li>
+          </ul>
+
+          <div class="highlight-box">
+            <h4 style="margin-bottom: var(--space-2); color: var(--color-primary-light);">💰 The Math</h4>
+            <p style="margin-bottom: 0;">If you create one eBook priced at ₹499 and sell just 5 copies a day, that's ₹74,850/month in passive income. Scale to 3 products and you're looking at ₹2.2 lakhs/month — with zero recurring work.</p>
+          </div>
+
+          <h2>🚀 Why Now?</h2>
+          <p>Three things make 2026 the perfect year to start:</p>
+          <ul>
+            <li><strong>UPI has democratized payments</strong> — Any creator can accept payments via UPI without expensive merchant accounts. We accept payments at 8861005767@nyes instantly.</li>
+            <li><strong>AI tools reduce creation time</strong> — What used to take weeks now takes days. AI-assisted writing, music generation, and design tools have leveled the playing field.</li>
+            <li><strong>Indian audiences are paying</strong> — The ₹99-₹999 price range is the sweet spot. Indian customers are increasingly comfortable buying digital products when the content is genuinely valuable.</li>
+          </ul>
+
+          <h2>🎯 How to Start</h2>
+          <p>Here's our proven 4-step framework from the Marketing Mastery Guide (₹699):</p>
+          <ul>
+            <li><strong>Step 1: Identify your niche expertise</strong> — What do people DM you asking for help with?</li>
+            <li><strong>Step 2: Create a minimum viable product</strong> — A 20-page eBook or a 10-track beat pack. Don't overthink it.</li>
+            <li><strong>Step 3: Price it accessibly</strong> — ₹299-₹999 for Indian audiences. Premium quality at fair prices wins every time.</li>
+            <li><strong>Step 4: Use UPI for instant payments</strong> — Share your UPI link on Instagram bio, YouTube descriptions, and WhatsApp status.</li>
+          </ul>
+
+          <div class="highlight-box" style="text-align: center;">
+            <h4 style="margin-bottom: var(--space-3);">Ready to build your digital product empire?</h4>
+            <p style="margin-bottom: var(--space-4);">Browse our products for inspiration, or start your own journey today.</p>
+            <a href="store.html" class="btn btn-primary ripple-effect">Browse Products →</a>
+          </div>
+        `
+      },
+
+      'article-lofi': {
+        badge: 'Music',
+        title: "How We Produced Cosmic Beats Vol. 1: A Lo-Fi Journey",
+        meta: 'By NovaPulse Team • April 18, 2026 • 6 min read',
+        body: `
+          <p>When we set out to create Cosmic Beats Vol. 1, we had one question: <em>Can we make studio-quality lo-fi beats that Indian content creators can actually afford?</em> The answer, after 3 months of late-night sessions in our Bangalore studio, was a resounding yes.</p>
+
+          <h2>🎹 The Gear & Setup</h2>
+          <p>Contrary to what you might think, you don't need a ₹10 lakh studio to make great lo-fi music. Here's our actual setup:</p>
+          <ul>
+            <li><strong>DAW:</strong> FL Studio 21 (we started with the free trial!)</li>
+            <li><strong>Synths:</strong> Serum for pads, Vital (free!) for leads</li>
+            <li><strong>Samples:</strong> Custom vinyl crackle recorded from actual records from Commercial Street</li>
+            <li><strong>MIDI Controller:</strong> Akai MPK Mini — ₹6,500 on Amazon India</li>
+            <li><strong>Monitoring:</strong> Audio Technica ATH-M50x + Sony MDR-7506</li>
+          </ul>
+
+          <blockquote>"Lo-fi isn't about making 'bad' music on purpose. It's about capturing imperfection as beauty — the tape hiss, the detuned piano, the off-beat drum. That's what makes it feel human."</blockquote>
+
+          <h2>🎵 The Production Process</h2>
+          <p>Each of the 25 tracks in Cosmic Beats followed a similar workflow:</p>
+          <ul>
+            <li><strong>Loop Foundation (30 min):</strong> Start with a jazzy chord progression — we love 7th and 9th chords in Cm or Am.</li>
+            <li><strong>Drums (20 min):</strong> Dusty boom-bap kicks with swing. We sampled kicks from vintage Bollywood records for that unique Indian lo-fi flavor.</li>
+            <li><strong>Atmosphere (30 min):</strong> Rain sounds from Bangalore's monsoon season (recorded on our balcony), vinyl crackle, and distant traffic ambience.</li>
+            <li><strong>Mix & Master (1 hour):</strong> Lo-pass filter on the master, slight tape saturation, and careful EQ to keep it warm but not muddy.</li>
+          </ul>
+
+          <h2>📈 The Results</h2>
+          <p>Cosmic Beats Vol. 1 launched at ₹399 and sold 203 copies in the first month — entirely through Instagram reels showing the production process and word-of-mouth in Indian creator communities. Total revenue: ₹80,997 from a single product.</p>
+
+          <div class="highlight-box" style="text-align: center;">
+            <h4 style="margin-bottom: var(--space-3);">Want the full pack?</h4>
+            <a href="store.html" class="btn btn-primary ripple-effect">Get Cosmic Beats Vol. 1 — ₹399 →</a>
+          </div>
+        `
+      },
+
+      'article-photography': {
+        badge: 'Photography',
+        title: "Capturing Bangalore: The Story Behind Urban Aesthetics",
+        meta: 'By NovaPulse Team • April 15, 2026 • 5 min read',
+        body: `
+          <p>Bangalore is a city of contrasts. Ancient temples sit next to glass-walled tech parks. Street vendors serve steaming filter coffee meters away from ₹2,000 craft lattes. This duality is what makes it the perfect subject for urban photography — and the inspiration behind our Urban Aesthetics Collection.</p>
+
+          <h2>📸 30 Days, 50+ Frames</h2>
+          <p>We spent an entire month — June 2025, right at the start of monsoon season — photographing Bangalore's most iconic and hidden spots:</p>
+          <ul>
+            <li><strong>MG Road at twilight</strong> — The neon reflections on wet roads after rain create an almost cyberpunk aesthetic</li>
+            <li><strong>Koramangala 4th Block</strong> — Café culture meets street art. We captured the colorful murals and buzzing evening crowds</li>
+            <li><strong>Cubbon Park at 6 AM</strong> — Morning walkers, ancient trees, and golden light filtering through the canopy</li>
+            <li><strong>Lalbagh Botanical Garden</strong> — The glasshouse against monsoon clouds is an iconic shot</li>
+            <li><strong>Malleshwaram</strong> — The old-world charm of flower markets, temple bells, and heritage homes</li>
+            <li><strong>HSR Layout & Indiranagar</strong> — The startup district's energy captured through candid street shots</li>
+          </ul>
+
+          <blockquote>"Every photograph in this collection tells a story about Bangalore — the city that raised us, inspired us, and continues to surprise us every single day."</blockquote>
+
+          <h2>📷 Camera Settings & Tips</h2>
+          <p>For aspiring urban photographers, here are our go-to settings:</p>
+          <ul>
+            <li><strong>Camera:</strong> Sony A7III with a 35mm f/1.8 prime (our workhorse)</li>
+            <li><strong>Night shots:</strong> ISO 1600-3200, f/2.8, 1/60s — embrace the grain, it adds character</li>
+            <li><strong>Golden hour:</strong> ISO 100, f/4, 1/250s — warm tones, long shadows, magic light</li>
+            <li><strong>Editing:</strong> Lightroom with custom presets designed for Indian color palettes (included in the pack!)</li>
+          </ul>
+
+          <div class="highlight-box" style="text-align: center;">
+            <h4 style="margin-bottom: var(--space-3);">Get 50+ high-res Bangalore photos</h4>
+            <a href="store.html" class="btn btn-primary ripple-effect">Urban Aesthetics Collection — ₹299 →</a>
+          </div>
+        `
+      },
+
+      'article-marketing': {
+        badge: 'Marketing',
+        title: "5 Digital Marketing Strategies That Actually Work in India",
+        meta: 'By NovaPulse Team • April 12, 2026 • 7 min read',
+        body: `
+          <p>Let's be honest — most digital marketing advice online is written for American and European markets. The strategies that work for a SaaS startup in San Francisco don't always translate to a D2C brand in Bangalore or a coaching business in Delhi. Here are five strategies we've tested ourselves and included in our Marketing Mastery Guide (₹699).</p>
+
+          <h2>1️⃣ WhatsApp-First Marketing</h2>
+          <p>India has 500 million WhatsApp users. If your customers are Indian, WhatsApp isn't optional — it's your primary channel. What works:</p>
+          <ul>
+            <li>Create a <strong>WhatsApp Business</strong> catalog with your products</li>
+            <li>Use <strong>broadcast lists</strong> (not groups) for promotions — feels personal, not spammy</li>
+            <li>Share <strong>status updates</strong> daily — this is the most underused feature in Indian marketing</li>
+            <li>Include your <strong>UPI link</strong> directly in WhatsApp messages for instant checkout</li>
+          </ul>
+
+          <h2>2️⃣ Instagram Reels with Indian Context</h2>
+          <p>Generic reels get generic reach. What works in India is culturally relevant content. When we promoted our Cosmic Beats pack, we showed the production process with <strong>Bangalore rain sounds</strong> in the background. That single reel got 45,000 views and drove 28 direct sales.</p>
+
+          <h2>3️⃣ Micro-Pricing (₹99-₹999 Sweet Spot)</h2>
+          <p>Indian customers are value-conscious, not cheap. Price below ₹1000 and you eliminate the "let me think about it" friction. Our ₹299 photo packs sell 3x more than similarly priced products on international platforms because we've nailed the India price point.</p>
+
+          <blockquote>"Don't compete on price — compete on value at a price point your audience has already decided they're comfortable spending. In India, that's ₹299-₹999."</blockquote>
+
+          <h2>4️⃣ UPI + Direct Sales (Skip the Platforms)</h2>
+          <p>Platforms like Gumroad or Etsy take 10-30% in fees & currency conversion. With UPI, you keep 100% of every sale. Our UPI ID (8861005767@nyes) has processed ₹40+ lakhs in direct payments with zero platform fees.</p>
+
+          <h2>5️⃣ Community-Led Growth</h2>
+          <p>India runs on communities — college WhatsApp groups, LinkedIn creator circles, Discord servers for niche interests. Instead of running ads, embed yourself in 5-10 relevant communities and provide genuine value. When our Creator's Handbook dropped, we posted free sample chapters in 8 creator communities on Telegram. The result: 142 sales in the first month.</p>
+
+          <div class="highlight-box" style="text-align: center;">
+            <h4 style="margin-bottom: var(--space-3);">Get all 50+ strategies in our complete guide</h4>
+            <a href="store.html" class="btn btn-primary ripple-effect">Marketing Mastery Guide — ₹699 →</a>
+          </div>
+        `
+      },
+
+      'article-video': {
+        badge: 'Video',
+        title: "Motion Graphics for YouTube: From Zero to Pro",
+        meta: 'By NovaPulse Team • April 10, 2026 • 5 min read',
+        body: `
+          <p>You've seen those YouTube channels with clean animated intros, smooth transitions, and professional lower thirds — and wondered how much they paid a motion designer. The answer might surprise you: many of them are using template packs like our Motion Graphics Starter Kit (₹999).</p>
+
+          <h2>🎬 Why Templates Aren't "Cheating"</h2>
+          <p>There's a misconception that using templates is somehow less creative. Wrong. Templates are tools, just like camera presets or font libraries. Hollywood uses template-based VFX pipelines. Bollywood editors use preset-based color grading. What matters is how you customize them for your brand.</p>
+
+          <h2>📦 What's Inside Our Kit</h2>
+          <p>The Motion Graphics Starter Kit includes 30+ elements designed for Indian YouTubers and content creators:</p>
+          <ul>
+            <li><strong>5 Intro Animations</strong> — Clean, modern logo reveals (After Effects & Premiere Pro compatible)</li>
+            <li><strong>10 Lower Thirds</strong> — Minimalist name/title bars in multiple styles</li>
+            <li><strong>8 Transitions</strong> — Smooth wipes, glitch effects, and geometric reveals</li>
+            <li><strong>5 Subscribe Animations</strong> — Like, share, subscribe reminded animations</li>
+            <li><strong>Bonus: Custom color controls</strong> — Change any color to match your brand in one click</li>
+          </ul>
+
+          <h2>📈 Real Results</h2>
+          <p>We surveyed 50 customers who use the kit. On average, they reported a <strong>34% increase in watch time</strong> after adding professional motion graphics to their videos. Why? Because quality graphics signal credibility — viewers subconsciously trust channels that look professional.</p>
+
+          <div class="highlight-box" style="text-align: center;">
+            <h4 style="margin-bottom: var(--space-3);">Level up your YouTube channel today</h4>
+            <a href="store.html" class="btn btn-primary ripple-effect">Motion Graphics Kit — ₹999 →</a>
+          </div>
+        `
+      },
+
+      'article-nature': {
+        badge: 'Photography',
+        title: "Nature's Canvas: Photographing India's Western Ghats",
+        meta: 'By NovaPulse Team • April 8, 2026 • 4 min read',
+        body: `
+          <p>The Western Ghats stretch 1,600 kilometers along India's western coast — older than the Himalayas, recognized as a UNESCO World Heritage Site, and home to some of the most breathtaking landscapes on Earth. Our Nature's Canvas Portfolio (₹299) captures just a fraction of this ancient beauty.</p>
+
+          <h2>🏔️ The Expedition</h2>
+          <p>We spent the 2025 monsoon season traveling through Karnataka's share of the Western Ghats, covering:</p>
+          <ul>
+            <li><strong>Coorg (Kodagu)</strong> — Misty coffee plantations, Abbey Falls, and the Raja's Seat viewpoint at sunrise</li>
+            <li><strong>Chikmagalur</strong> — Mullayanagiri peak (highest point in Karnataka) and Hebbe Falls hidden in coffee estates</li>
+            <li><strong>Jog Falls</strong> — India's second-highest plunge waterfall during peak monsoon — absolutely thunderous</li>
+            <li><strong>Agumbe</strong> — The "Cherrapunji of the South" — we camped here during a 48-hour rainfall</li>
+            <li><strong>Kudremukh</strong> — Rolling grasslands that look like Ireland, but with wild elephants</li>
+          </ul>
+
+          <blockquote>"Standing at the edge of Kudremukh peak at 5:30 AM, watching clouds roll through valleys of emerald green — that's the moment you realize your camera can never fully capture what your eyes can see. But you try anyway."</blockquote>
+
+          <h2>📷 The Collection</h2>
+          <p>Nature's Canvas includes 40+ high-resolution photographs, each commercially licensed for use in projects, presentations, social media, and print:</p>
+          <ul>
+            <li>All photos shot in RAW, processed in Lightroom with natural color grading</li>
+            <li>Minimum resolution: 6000 x 4000px (24MP+)</li>
+            <li>Includes 3 Lightroom presets used on the actual photos</li>
+            <li>Categories: Waterfalls, Mountains, Flora, Fog/Mist, Golden Hour</li>
+          </ul>
+
+          <div class="highlight-box" style="text-align: center;">
+            <h4 style="margin-bottom: var(--space-3);">40+ stunning Indian landscape photographs</h4>
+            <a href="store.html" class="btn btn-primary ripple-effect">Nature's Canvas — ₹299 →</a>
+          </div>
+        `
+      },
+
+      'article-upi': {
+        badge: 'Business',
+        title: "Why UPI Changed Everything for Indian Digital Sellers",
+        meta: 'By NovaPulse Team • April 5, 2026 • 4 min read',
+        body: `
+          <p>Before UPI, selling digital products as an independent creator in India was a nightmare. You needed a payment gateway (₹10,000+ setup), a registered business, GST compliance, and still lost 2-3% per transaction. Today? You share a UPI link and money hits your bank account in 2 seconds. Here's how UPI has fundamentally changed the game for creators like us.</p>
+
+          <h2>💳 Our Stack: Zero Platform Fees</h2>
+          <p>At NovaPulse, all our payments go through UPI. Here's our exact setup:</p>
+          <ul>
+            <li><strong>UPI ID:</strong> 8861005767@nyes</li>
+            <li><strong>Works with:</strong> Google Pay, PhonePe, Paytm, BHIM, Amazon Pay</li>
+            <li><strong>Transaction fee:</strong> ₹0 (yes, zero)</li>
+            <li><strong>Settlement time:</strong> Instant — money in your bank in under 5 seconds</li>
+          </ul>
+
+          <h2>📊 UPI by the Numbers (2026)</h2>
+          <ul>
+            <li>UPI processes <strong>15+ billion transactions per month</strong> — making it the world's largest real-time payment system</li>
+            <li>Over <strong>350 million Indians</strong> use UPI regularly</li>
+            <li>Average transaction value: <strong>₹1,500</strong> — perfect for digital products in the ₹299-₹999 range</li>
+            <li>Person-to-person payments have <strong>100% uptime</strong> guarantee</li>
+          </ul>
+
+          <blockquote>"We've processed over ₹40 lakhs through our UPI ID alone. No payment gateway, no platform fees, no monthly charges. Just our phone number and @nyes."</blockquote>
+
+          <h2>🛠️ How to Set Up UPI for Your Business</h2>
+          <ul>
+            <li><strong>Step 1:</strong> Open any UPI app (Google Pay is most popular)</li>
+            <li><strong>Step 2:</strong> Set up your UPI ID — ideally your phone number for easy sharing</li>
+            <li><strong>Step 3:</strong> Create a payment link with pre-filled amount using <code>upi://pay?pa=YOUR_UPI_ID&am=AMOUNT</code></li>
+            <li><strong>Step 4:</strong> Share the link on Instagram bio, YouTube descriptions, and your website checkout</li>
+          </ul>
+
+          <div class="highlight-box" style="text-align: center;">
+            <h4 style="margin-bottom: var(--space-3);">Ready to start selling?</h4>
+            <p style="margin-bottom: var(--space-3);">Learn the complete playbook in our Marketing Mastery Guide</p>
+            <a href="store.html" class="btn btn-primary ripple-effect">Marketing Mastery Guide — ₹699 →</a>
+          </div>
+        `
+      }
+    };
+
+    function showArticle(articleId) {
+      const article = blogArticles[articleId];
+      if (!article) return;
+
+      const container = document.getElementById('article-content');
+      container.innerHTML = `
+        <span class="badge badge-primary" style="margin-bottom: var(--space-4);">${article.badge}</span>
+        <h1 style="font-size: var(--text-4xl); margin-bottom: var(--space-4);">${article.title}</h1>
+        <div style="display: flex; align-items: center; gap: var(--space-4); color: var(--color-text-muted); font-size: var(--text-sm); margin-bottom: var(--space-8);">
+          <span>${article.meta}</span>
+        </div>
+        <div class="article-body">${article.body}</div>
+      `;
+
+      document.getElementById('full-article').style.display = 'block';
+      document.getElementById('full-article').scrollIntoView({ behavior: 'smooth' });
+      
+      if (window.GamificationSystem) {
+        GamificationSystem.addPoints(15, 'Read a blog article!');
+      }
+    }
+
+    function hideArticle() {
+      document.getElementById('full-article').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
