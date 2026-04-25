@@ -343,30 +343,8 @@ function showLevelUp(name, level) {
   setTimeout(() => overlay.remove(), 5000);
 }
 
-/* ===== 10. PWA INSTALL ===== */
-function initPWA() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-  }
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    const btn = document.querySelector('.pwa-install-btn');
-    if (btn) btn.classList.add('show');
-  });
-  // Add install button to nav
-  const navActions = document.querySelector('.nav-actions');
-  if (navActions) {
-    const btn = document.createElement('button');
-    btn.className = 'pwa-install-btn';
-    btn.innerHTML = '📱 Install App';
-    btn.addEventListener('click', async () => {
-      if (deferredPrompt) { deferredPrompt.prompt(); const result = await deferredPrompt.userChoice; if (result.outcome === 'accepted') showToast('App installed! 🎉', 'success'); deferredPrompt = null; btn.classList.remove('show'); }
-    });
-    navActions.prepend(btn);
-  }
-}
+/* ===== 10. PWA INSTALL (disabled) ===== */
+function initPWA() { /* removed */ }
 
 /* ===== 11. COMPARISON SLIDERS ===== */
 function initComparisonSliders() {
