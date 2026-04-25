@@ -6,6 +6,12 @@
   <meta name="description" content="NovaPulse Digital Studio — Premium digital products for creators. eBooks, music, photography, and video content. Ignite Your Digital Universe.">
   <title>NovaPulse Digital | Ignite Your Digital Universe</title>
 
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#7c3aed">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +22,7 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/chatbot.css">
+  <link rel="stylesheet" href="css/upgrades.css">
 
   <style>
     /* Page-specific styles */
@@ -247,6 +254,34 @@
           <div class="feature-icon" style="background: rgba(239, 68, 68, 0.1); color: #fca5a5;">⭐</div>
           <h3>Rewards Program</h3>
           <p>Earn points with every interaction and purchase. Redeem for discounts and exclusive content.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated Stats Section -->
+  <section class="section stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <div class="stat-card-icon">📦</div>
+          <div class="stat-card-number"><span data-count="12500" data-suffix="+">0</span></div>
+          <div class="stat-card-label">Products Sold</div>
+        </div>
+        <div class="stat-card reveal delay-1">
+          <div class="stat-card-icon">🌍</div>
+          <div class="stat-card-number"><span data-count="45" data-suffix="+">0</span></div>
+          <div class="stat-card-label">Countries Reached</div>
+        </div>
+        <div class="stat-card reveal delay-2">
+          <div class="stat-card-icon">⭐</div>
+          <div class="stat-card-number"><span data-count="2100" data-suffix="+">0</span></div>
+          <div class="stat-card-label">5-Star Reviews</div>
+        </div>
+        <div class="stat-card reveal delay-3">
+          <div class="stat-card-icon">🚀</div>
+          <div class="stat-card-number"><span data-count="99" data-suffix="%">0</span></div>
+          <div class="stat-card-label">Satisfaction Rate</div>
         </div>
       </div>
     </div>
@@ -576,6 +611,9 @@
   <script src="js/main.js"></script>
   <script src="js/store.js"></script>
   <script src="js/chatbot.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/audioplayer.js"></script>
+  <script src="js/upgrades.js"></script>
 
   <script>
     // Star rating interaction
